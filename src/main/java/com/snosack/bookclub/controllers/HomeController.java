@@ -1,5 +1,7 @@
 package com.snosack.bookclub.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.snosack.bookclub.models.Book;
 import com.snosack.bookclub.models.LoginUser;
 import com.snosack.bookclub.models.User;
+import com.snosack.bookclub.services.BookService;
 import com.snosack.bookclub.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +23,10 @@ import jakarta.validation.Valid;
 public class HomeController {
 
 	@Autowired
-	private UserService userServ;
+	UserService userServ;
+	
+	@Autowired
+	BookService bookServ;
 
 	@GetMapping("/")
 	public String index(Model model) {
@@ -66,6 +73,8 @@ public class HomeController {
 		if (userId == null) {
 			return "redirect:/";
 		}
+		List<Book> books = bookServ.allBooks();
+		model.addAttribute("books", books);
 		User user = userServ.findUser(userId);
 		model.addAttribute("user", user);
 		return "dashboard.jsp";

@@ -7,7 +7,7 @@
 <html data-bs-theme="dark">
 <head>
 <meta charset="ISO-8859-1">
-<title>Book Dashboard</title>
+<title>Add A Book</title>
 <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -20,31 +20,27 @@
 		<div class="container-fluid">
 			<h1 class="text-center">Welcome, ${user.name}</h1>
 			<div class="d-flex">
-				<a href="/addbook" class="btn btn-primary text-center mx-3">Add A Book!</a>
+				<a href="/home" class="btn btn-primary text-center mx-3">Dashboard</a>
 				<a href="/logout" class="btn btn-danger text-center mx-3">Log Out</a>
 			</div>
 		</div>
 	</div>
-	<div class="main mx-auto w-75">
-		<h2 class="my-5 text-center">Books From Everyone's Shelves</h2>
-		<table class="table mx-auto align-center text-center">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Title</th>
-					<th>Author Name</th>
-					<th>Posted By</th>
-				</tr>
-			</thead>
-			<c:forEach items="${books}" var="book">
-				<tr>
-					<td>${book.id}</td>
-					<td><a href="/books/${book.id}">${book.title}</a></td>
-					<td>${book.author}</td>
-					<td>${book.user.name}</td>
-				</tr>
-			</c:forEach>
-		</table>
+	<div class="main w-25 mx-auto">
+		<h2 class="my-5 text-center">Create A Book!</h2>
+		<div class="form-control">
+			<form:form action="/createbook" method="POST" modelAttribute="book">
+				<form:label path="title" >Book Title</form:label>
+				<form:errors path="title" class="form-control" />
+				<form:input path="title" class="form-control" />
+				<form:label path="author" >Author</form:label>
+				<form:errors path="author" class="form-control" />
+				<form:input path="author" class="form-control" />
+				<form:label path="thoughts" >My Thoughts</form:label>
+				<form:errors path="thoughts" class="form-control" />
+				<form:input type="textarea" path="thoughts" class="form-control" />
+				<button type="submit" class="btn btn-primary my-3">Submit</button>
+			</form:form>
+		</div>
 	</div>
 </body>
 </html>
